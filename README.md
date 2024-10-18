@@ -5,6 +5,9 @@ mostly intended for my own edification, and for use with my own projects (that
 do not require the full functionality of jQuery, and thus can benefit from
 something smaller).
 
+It is written using modern Javascript (ES6) and does not strive to be overly
+backwards compatible.
+
 Elemental will only ever support a subset of the jQuery features (exactly which
 subset will probably change over time).
 
@@ -21,7 +24,10 @@ Elemental is mostly chainable and implicitly iterative, so that (just like in
 jQuery) invoking `$('*').css({ background: 'red' })` will change the background
 color of all elements in the DOM to red).
 
+* [Elemental source]
+
 [Javascript ForEach]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach "Javascript .forEach() Documentation"
 [jQuery each]: https://api.jquery.com/each/ "jQuery .each() Documentation"
+[Elemental Source]: https://raw.githubusercontent.com/zrajm/elemental/refs/heads/main/elemental.mjs "Elemental Source Code"
 
 <!--EOF-->

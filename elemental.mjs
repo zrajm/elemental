@@ -1,4 +1,5 @@
 //-*- mode: js; js-indent-level: 2 -*-
+// Copyright 2024 by zrajm. License: CC BY-SA (text), GPLv2 (code).
 
 // Elemental. Mini jQuery replacement.
 export const $ = x => new Elemental(x)
