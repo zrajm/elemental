@@ -9,7 +9,7 @@ export class Elemental extends Array {
   // Return array of DOM Elements, with some added methods (similar to jQuery).
   constructor(x) {
     super()
-    if (typeof x === 'function') { addEventListener('load', x); return }
+    if (typeof x === 'function') { return $(document).on('load', x) }
     Object.assign(
       this, typeof x === 'string'
         ? (x[0] === '<'
