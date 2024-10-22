@@ -1,0 +1,84 @@
+/*-*-css-indent-offset:2-*-*/
+/* Mini-reset. */
+html { box-sizing: border-box; }
+*, :before, :after { box-sizing: inherit; padding: 0; margin: 0; text-indent: initial; }
+
+/********************/
+html {
+  max-width: 100%;
+  font: 20px/1.5 sans-serif;
+}
+body {
+  margin: 1rem auto;
+  max-width: 35rem;
+  width: calc(100vw - 4rem);
+  line-height: 1.75;
+}
+sub, sup {
+  /* Using hairspace (\feff) lets any <a> underline (in <a><sup>…</sup></a>)
+     protrude out a bit on either side, making sure its visible even when link
+     text has a descender (as with descending old-style numbers). */
+  &:before, &:after { content: '\feff\200a\feff'; }
+  font-size: .8em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup { top: -1.15ex; } /* push up one x-height of surrounding font size */
+sub { top:  1ex;    } /* push down one x-height footnote font size */
+
+/********************/
+p { margin-top: 1rem }
+p + p, p.indented {
+  margin-top: 0;
+  text-indent: 1.25rem;
+}
+p:empty + p {
+  margin-top: 1rem;
+  text-indent: 0;
+}
+ul {
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+h1, h2, h3 {
+  margin-top: 1em;
+}
+small { font-size: .9em; }
+pre, tt {
+  border-radius: .125rem;
+  padding: 0  .125rem  .125rem;
+  margin:  0 -.125rem -.125rem;
+  box-decoration-break: clone;
+  box-shadow: 0 0 .75rem #8887 inset, 0 0 1.5rem #8887 inset;
+  background: #8881;
+}
+pre { padding: .125em .5em; margin: 0 1em }
+a {
+  text-decoration: none;
+  border-radius: .125rem;
+  padding: 0  .25rem  .125rem;
+  margin:  0 -.25rem -.125rem;
+  box-decoration-break: clone;
+}
+a:hover {
+  box-shadow: 0 0 .75rem #88f7 inset, 0 0 1.5rem #88f7 inset;
+  background: #88f1;
+  text-decoration: underline 2px;
+}
+:target:before {
+  content: ' ';
+  position: absolute; top: 0rem; bottom: -.125rem;
+  left: -.25rem; right: -.25rem;
+  border-radius: .125rem;
+  box-shadow: 0 0 .75rem #fb4b inset, 0 0 1.5rem #fb4b inset;
+  background: #fb44;
+  z-index: -1;
+}
+
+/* Mobile-specific CSS. */
+@media screen and (max-width: 767px) {
+  body { margin: 0 0 0 .5rem; }
+}
+
+/*EOF*/

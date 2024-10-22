@@ -1,5 +1,7 @@
-Elemental
-=========
+# Elemental
+
+* [Elemental source]
+
 This is my little home-brewed attempt at making a jQuery-replacement. It's
 mostly intended for my own edification, and for use with my own projects (that
 do not require the full functionality of jQuery, and thus can benefit from
@@ -24,38 +26,37 @@ Elemental is mostly chainable and implicitly iterative, so that (just like in
 jQuery) invoking `$('*').css({ background: 'red' })` will change the background
 color of all elements in the DOM to red).
 
-* [Elemental source]
 
+# Methods
 
-Methods
-=======
 Most methods are directly analogous to the jQuery function with the same name.
 
 
-Constructor
------------
+## Constructor
 
-`$(SELECTOR|ELEMENT|HTML|FUNC)`—Returns an Elemental array containing DOM
-Elements. All Javascript Array methods are supported (`.splice()`, `.concat()`,
-`.forEach()` etc), and any invoked callback functions are passed the native
-Javascript arguments (this differs from jQuery).
+`$(SELECTOR|ELEMENT|HTML|FUNC)`—Returns an Elemental array (with DOM Elements).
+The Elemental object inherits from Javascript Array, so all array methods are
+supported (`.splice()`, `.concat()`, `.forEach()` etc). Callback functions
+invoked by these are passed methods are passed their arguments in the native
+Javascript order (not the order used by jQuery).
 
-**Allowed Arguments**
+
+### Allowed Arguments
 
 * `SELECTOR`—Returns the DOM elements matched by the given CSS selector.
-* `ELEMENT`–Returns an Element object
-* `HTML`–Creates and returns the elements described by the HTML string. The
+* `ELEMENT`—Returns an Element object
+* `HTML`—Creates and returns the elements described by the HTML string. The
   string must begin with `<` (or else it will be considered a `SELECTOR`).
   Elements are not automatically inserted into the DOM, you'll have to do that
   yourself (using `.append()` or similar). **NOTE: Inline event handlers, and
   similar Javascript content found in `HTML` will be executed, always escape
   untrusted code.**
-* `FUNC`–Just like in jQuery `$(FUNC)` is an alias for `$(document).on('load',
+* `FUNC`—Just like in jQuery `$(FUNC)` is an alias for `$(document).on('load',
   FUNC)`.
 
 
-DOM Traversal
--------------
+## DOM Traversal
+
 * `.forEach()`—Just like Array `.forEach()` except that it returns an Elemental
   array, and is chainable.
 * `.parent()`—Return list of containing parent DOM elements, one for each
@@ -64,8 +65,12 @@ DOM Traversal
 * `.children()`—Return list of all directly descendant DOM elements.
 
 
-Query-esque
------------
+## Query-esque
+
+These methods all accept a CSS-style `SELECTOR` as an argument, and traverse
+the DOM to match any matching elements, however, the way they traverse is
+differs.
+
 * `.closest(SELECTOR)`—Return list of closest element or ancestor element that
   matches the given CSS selector. For each element in the input matching is
   first attempted with the element itself, then their parent element, then
@@ -76,20 +81,23 @@ Query-esque
   CSS selector, `false` otherwise.
 
 
-Events
-------
+## Events
+
 * `.on(EVENTS, FUNC)`—Attach given event handler to each input elements.
   `EVENTS` may contain multiple (space separated) event names. Has some special
   logic to for `browser.tabs` and `browser.storage` events (useful in Firefox
-  addons). Elemental does not support the jQuery `.on(EVENTS, SELECTOR, FUNC)`
-  syntax, the easiest way to achieve the same result is to test whether or not
-  `$(evt.target).is(SELECTOR)` is `true` inside your `FUNC`.
+  addons). Elemental does not support the delegated events of jQuery (with the
+  added `SELECTOR` argument (as in `.on(EVENTS, SELECTOR, FUNC)` arguments)
+  syntax, the easiest way to emulate the same result is to add the following to
+  the beginning of your callback `FUNC`
+```
+  if (!$(evt.target).is(SELECTOR)) { return }
+```
 * `.off(EVENTS, FUNC)`—Remove given handler to from input elements. `EVENTS`
   may contain multiple (space separated) event names.
 
 
-DOM Modification
-----------------
+## DOM Modification
 
 * `.html()`—Get inner HTML content of first element in input set.
 * `.html(HTML)`—Replace the inner HTML content of each element in the input set
@@ -108,13 +116,13 @@ DOM Modification
   otherwise it is set to `VALUE`.
 
 
-Credits
-=======
+# Credits
+
 Written by zrajm. Released under [GNU Public License version 2][GPLv2].
 
 [GPLv2]: ./LICENSE.txt
 [Javascript ForEach]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach "Javascript .forEach() Documentation"
 [jQuery each]: https://api.jquery.com/each/ "jQuery .each() Documentation"
-[Elemental Source]: https://raw.githubusercontent.com/zrajm/elemental/refs/heads/main/elemental.mjs "Elemental Source Code"
+[Elemental source]: https://raw.githubusercontent.com/zrajm/elemental/refs/heads/main/elemental.mjs "Elemental Source Code"
 
 <!--EOF-->
