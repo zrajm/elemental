@@ -5,6 +5,9 @@
 export const $ = x => new Elemental(x)
 export class Elemental extends Array {
   #wordsplit(x) { return x.trim().split(/\s+/) }
+  #classes(cmd, x) {
+    return this.forEach(t => t.classList[cmd](this.#wordsplit(x)))
+  }
   // Invoked with `$(CSS-selector|html|element|onloadCallback)`.
   // Return array of DOM Elements, with some added methods (similar to jQuery).
   constructor(x) {
@@ -52,8 +55,9 @@ export class Elemental extends Array {
       .flatMap(x => x instanceof Elemental ? x : [x])
     return this.forEach(t => t.prepend(...a))
   }
-  addClass   (x) { return this.forEach(t => t.classList.add   (x)) }
-  removeClass(x) { return this.forEach(t => t.classList.remove(x)) }
+  addClass   (x) { return this.#classes('add',    x) }
+  removeClass(x) { return this.#classes('remove', x) }
+  toggleClass(x) { return this.#classes('toggle', x) }
   css(css = {}) {
     css = Object.entries(css)
     return this.forEach(t => css.forEach(([k, v]) =>

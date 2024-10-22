@@ -106,8 +106,12 @@ differs.
   the beginning of each in the input elements.
 * `.append(CONTENT…)`—Insert `CONTENT` (HTML, element, or Elemental array) at
   the end of each in the input elements.
-* `.addClass(CLASS)`—Add the given class name to the input elements.
-* `.removeClass(CLASS)`—Remove the given class name from the input elements.
+* `.addClass(CLASSES)`—Add the given (space-separated) class names to the input
+  elements.
+* `.removeClass(CLASSES)`—Remove the given (space-separated) class names from
+  the input elements.
+* `.toggleClass(CLASSES)`—Toggle the given (space-separated) class names in the
+  input elements.
 * `.css({ KEY: VALUE, …})`—Replace the CSS properties for the input elements
   with those specified in a plain object. If a `VALUE` is a Javascript number,
   `px` will be appended to it.
