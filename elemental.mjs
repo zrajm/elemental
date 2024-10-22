@@ -32,7 +32,7 @@ export class Elemental extends Array {
       if (typeof browser !== 'undefined' &&  // for Firefox plugins
           ($e === browser.tabs || $e === browser.storage)) {
         return $e[`on${e[0].toUpperCase()}${e.slice(1)}`].addListener(...a)
-        }
+      }
       return $e.addEventListener(e, ...a)
     }))
   }
