@@ -60,6 +60,13 @@ export class Elemental extends Array {
       t.style[k] = `${v}${typeof v === 'number' ? 'px' : ''}`
     ))
   }
+  attr(a) {
+    if (Array.isArray(a)) { throw TypeError('.attr() arg cannot be array') }
+    if (typeof a === 'string') { return this[0].getAttribute(a) }
+    a = Object.entries(a)
+    return this.forEach(t => a.forEach(([k, v]) =>
+      t[`${v == null ? 'remove' : 'set'}Attribute`](k, v)))
+  }
 }
 
 //[eof]
