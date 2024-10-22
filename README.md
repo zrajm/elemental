@@ -26,6 +26,93 @@ color of all elements in the DOM to red).
 
 * [Elemental source]
 
+
+Methods
+=======
+Most methods are directly analogous to the jQuery function with the same name.
+
+
+Constructor
+-----------
+
+`$(SELECTOR|ELEMENT|HTML|FUNC)`—Returns an Elemental array containing DOM
+Elements. All Javascript Array methods are supported (`.splice()`, `.concat()`,
+`.forEach()` etc), and any invoked callback functions are passed the native
+Javascript arguments (this differs from jQuery).
+
+**Allowed Arguments**
+
+* `SELECTOR`—Returns the DOM elements matched by the given CSS selector.
+* `ELEMENT`–Returns an Element object
+* `HTML`–Creates and returns the elements described by the HTML string. The
+  string must begin with `<` (or else it will be considered a `SELECTOR`).
+  Elements are not automatically inserted into the DOM, you'll have to do that
+  yourself (using `.append()` or similar). **NOTE: Inline event handlers, and
+  similar Javascript content found in `HTML` will be executed, always escape
+  untrusted code.**
+* `FUNC`–Just like in jQuery `$(FUNC)` is an alias for `$(document).on('load',
+  FUNC)`.
+
+
+DOM Traversal
+-------------
+* `.forEach()`—Just like Array `.forEach()` except that it returns an Elemental
+  array, and is chainable.
+* `.parent()`—Return list of containing parent DOM elements, one for each
+  element in the input array. (The returned result may contain duplicates and
+  `null` elements).
+* `.children()`—Return list of all directly descendant DOM elements.
+
+
+Query-esque
+-----------
+* `.closest(SELECTOR)`—Return list of closest element or ancestor element that
+  matches the given CSS selector. For each element in the input matching is
+  first attempted with the element itself, then their parent element, then
+  grandparent element etc and so on up to the root element. (The returned
+  result may contain duplicates and `null` elements).
+* `.find(SELECTOR)`—Return list of all matching child elements.
+* `.is(SELECTOR)`—Return `true` if any element in the input matches the given
+  CSS selector, `false` otherwise.
+
+
+Events
+------
+* `.on(EVENTS, FUNC)`—Attach given event handler to each input elements.
+  `EVENTS` may contain multiple (space separated) event names. Has some special
+  logic to for `browser.tabs` and `browser.storage` events (useful in Firefox
+  addons). Elemental does not support the jQuery `.on(EVENTS, SELECTOR, FUNC)`
+  syntax, the easiest way to achieve the same result is to test whether or not
+  `$(evt.target).is(SELECTOR)` is `true` inside your `FUNC`.
+* `.off(EVENTS, FUNC)`—Remove given handler to from input elements. `EVENTS`
+  may contain multiple (space separated) event names.
+
+
+DOM Modification
+----------------
+
+* `.html()`—Get inner HTML content of first element in input set.
+* `.html(HTML)`—Replace the inner HTML content of each element in the input set
+  with the specified HTML.
+* `.prepend(CONTENT…)`—Insert `CONTENT` (HTML, element, or Elemental array) at
+  the beginning of each in the input elements.
+* `.append(CONTENT…)`—Insert `CONTENT` (HTML, element, or Elemental array) at
+  the end of each in the input elements.
+* `.addClass(CLASS)`—Add the given class name to the input elements.
+* `.removeClass(CLASS)`—Remove the given class name from the input elements.
+* `.css({ KEY: VALUE, …})`—Replace the CSS properties for the input elements
+  with those specified in a plain object. If a `VALUE` is a Javascript number,
+  `px` will be appended to it.
+* `.attr({ KEY: VALUE, …})`—Set or remove attributes. If a `VALUE` is nullish
+  (`null` or `undefined`) then the corresponding attribute is removed,
+  otherwise it is set to `VALUE`.
+
+
+Credits
+=======
+Written by zrajm. Released under [GNU Public License version 2][GPLv2].
+
+[GPLv2]: ./LICENSE.txt
 [Javascript ForEach]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach "Javascript .forEach() Documentation"
 [jQuery each]: https://api.jquery.com/each/ "jQuery .each() Documentation"
 [Elemental Source]: https://raw.githubusercontent.com/zrajm/elemental/refs/heads/main/elemental.mjs "Elemental Source Code"
