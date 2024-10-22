@@ -47,6 +47,11 @@ export class Elemental extends Array {
       .flatMap(x => x instanceof Elemental ? x : [x])
     return this.forEach(t => t.append(...a))
   }
+  prepend(...a) {
+    a = a.map(x => /^</.test(x) ? $(x) : x)
+      .flatMap(x => x instanceof Elemental ? x : [x])
+    return this.forEach(t => t.prepend(...a))
+  }
   addClass   (x) { return this.forEach(t => t.classList.add   (x)) }
   removeClass(x) { return this.forEach(t => t.classList.remove(x)) }
   css(css = {}) {
