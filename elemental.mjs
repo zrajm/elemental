@@ -6,7 +6,7 @@ export const $ = x => new Elemental(x)
 export class Elemental extends Array {
   #wordsplit(x) { return x.trim().split(/\s+/) }
   #classes(cmd, x) {
-    return this.forEach(t => t.classList[cmd](this.#wordsplit(x)))
+    return this.forEach(t => t.classList[cmd](...this.#wordsplit(x)))
   }
   // Invoked with `$(CSS-selector|html|element|onloadCallback)`.
   // Return array of DOM Elements, with some added methods (similar to jQuery).

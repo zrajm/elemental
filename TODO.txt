@@ -15,7 +15,9 @@
      methods?
 * [0/1] Tests
 ** TODO Add some kind of tests
-* [1/1] FINISHED
+* [2/2] FINISHED
+** DONE Allow space-separated class names work is class methods         :BUG:
+   CLOSED: [2025-03-17 Mon 17:17]
 ** DONE Fixed `.append(HTML)` failure with `<head>` tags                :BUG:
    CLOSED: [2025-03-17 Mon 15:35]
    HTML tags that go into the `<head>` of a document couldn't be added using
