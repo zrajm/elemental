@@ -77,6 +77,9 @@ differs.
   grandparent element etc and so on up to the root element. (The returned
   result may contain duplicates and `null` elements).
 * `.find(SELECTOR)`—Return list of all matching child elements.
+* `.filter(SELECTOR|FUNC)`—Return matching subset of elements. Either using a
+  CSS selector, or invoking a function for each element is the set. `FUNC` is
+  invoked as `FUNC(ELEMENT, INDEX, ARRAY)`.
 * `.is(SELECTOR)`—Return `true` if any element in the input matches the given
   CSS selector, `false` otherwise.
 
@@ -106,6 +109,8 @@ differs.
   the beginning of each in the input elements.
 * `.append(CONTENT…)`—Insert `CONTENT` (HTML, element, or Elemental array) at
   the end of each in the input elements.
+* `.remove([SELECTOR|FUNC])`—Remove all elements from DOM. Invoking with an
+  argument is the same as `.filter(…).remove()`.
 * `.addClass(CLASSES)`—Add the given (space-separated) class names to the input
   elements.
 * `.removeClass(CLASSES)`—Remove the given (space-separated) class names from
@@ -113,8 +118,8 @@ differs.
 * `.toggleClass(CLASSES)`—Toggle the given (space-separated) class names in the
   input elements.
 * `.css({ KEY: VALUE, …})`—Replace the CSS properties for the input elements
-  with those specified in a plain object. If a `VALUE` is a Javascript number,
-  `px` will be appended to it.
+  with those specified in a plain object. If a `VALUE` is a number, `px` will
+  be appended to it.
 * `.attr({ KEY: VALUE, …})`—Set or remove attributes. If a `VALUE` is nullish
   (`null` or `undefined`) then the corresponding attribute is removed,
   otherwise it is set to `VALUE`.

@@ -22,11 +22,14 @@ export class Elemental extends Array {
         : x.length === undefined ? [x] : x)
   }
   /* traversal */
-  forEach(...a) { super.forEach(...a); return this }
+  forEach(x) { super.forEach(x); return this }
   parent() { return this.map(t => t.parentElement) } /* not uniqued! (jQuery does) */
   children() { return this.flatMap(t => [...t.children]) }
   /* query-esque */
   closest(x) { return this.map(t => t.closest(x)) } /* not uniqued! (jQuery does) */
+  filter(x) {
+    return super.filter(typeof x === 'string' ? t => t.matches(x) : x)
+  }
   find(x) { return this.flatMap(t => [...t.querySelectorAll(x)]) }
   is(a) { return this.some(t => t.matches(a)) }
   /* events */
@@ -55,6 +58,9 @@ export class Elemental extends Array {
     a = a.map(x => /^</.test(x) ? $(x) : x)
       .flatMap(x => x instanceof Elemental ? x : [x])
     return this.forEach(t => t.prepend(...a))
+  }
+  remove(x) {
+    return (x ? this.filter(x) : this).forEach(t => t.remove())
   }
   addClass   (x) { return this.#classes('add',    x) }
   removeClass(x) { return this.#classes('remove', x) }
