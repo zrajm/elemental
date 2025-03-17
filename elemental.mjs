@@ -1,5 +1,5 @@
 //-*- mode: js; js-indent-level: 2 -*-
-// Copyright 2024 by zrajm. License: CC BY-SA (text), GPLv2 (code).
+// Copyright 2024-2025 by zrajm. License: CC BY-SA (text), GPLv2 (code).
 
 // Elemental. Mini jQuery replacement.
 export const $ = x => new Elemental(x)
@@ -16,8 +16,9 @@ export class Elemental extends Array {
     Object.assign(
       this, typeof x === 'string'
         ? (x[0] === '<'
-           ? new DOMParser().parseFromString(x, 'text/html').body.children // HTML
-           : document.querySelectorAll(x))   // CSS selector
+           ? new DOMParser().parseFromString(x, 'text/html')  // HTML
+             .querySelectorAll('html>*>*') // (head + body)
+           : document.querySelectorAll(x))                    // CSS selector
         : x.length === undefined ? [x] : x)
   }
   /* traversal */

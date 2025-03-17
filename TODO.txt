@@ -1,0 +1,24 @@
+-*- org -*-
+
+* [0/1] Features
+** TODO Pass around `Set` internally? (instead of `NodeList`)
+   `.querySelectorAll()` returns a `NodeList` object (which is then used
+   internally by Elemental), but MDN seem to think that this is not best
+   practice for newer code.
+   (https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+
+   How about using a Javascript `Set` instead? (Using `new Set($(SELECTOR))`
+   seems to work just fine). This would:
+
+   + Automatically uniquify the result (just like jQuery).
+   + Maybe make it possible replace some Elemental methods with builtin `Set`
+     methods?
+* [0/1] Tests
+** TODO Add some kind of tests
+* [1/1] FINISHED
+** DONE Fixed `.append(HTML)` failure with `<head>` tags                :BUG:
+   CLOSED: [2025-03-17 Mon 15:35]
+   HTML tags that go into the `<head>` of a document couldn't be added using
+   Elemental. This happened since only the `<body>` part of whatever
+   `DOMParser().parseFromString()` generated was extracted and inserted.
+* [eof]
