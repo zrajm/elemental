@@ -15,10 +15,27 @@
      methods?
    + Allows one to test if Elemental returned anything by using `ELEMENT.size`
      (instead of the wordier `ELEMENT.length`)
-* [0/1] Tests
+* [0/2] Tests
+** TODO Test that empty Elemental set works with `.flatmap()` etc.
+   Behavior I saw was:
+
+   $('selector-that-doesnt-match-anything').filter(()=>{}) => [0]
+   $('selector-that-doesnt-match-anything').flatMap(()=>{}) => [0]
+   $('selector-that-doesnt-match-anything').map(()=>{}) => [0]
+
+   But these worked just fine:
+
+   [...$('selector-that-doesnt-match-anything')] => []
+   $('selector-that-doesnt-match-anything').length => 0
 ** TODO Add some kind of tests
-* [3/3] FINISHED
-** DONE Fixed `.find()` returning `[0`] on empty set returned           :BUG:
+* [4/4] FINISHED
+** DONE Fixed array returning `[0]` on empty set                        :BUG:
+   CLOSED: [2025-03-18 Tue 14:53]
+   This happened because the Array methods would invoke OUR constructor
+   (instead of the native Array constructor) since we're extending Array. This
+   invocation was by means of `new Elemental(0)` -- meaning that Elemental HAS
+   to support single number (at least the number zero) as an argument.
+** DONE Fixed `.find()` returning `[0]` on empty set returned           :BUG:
    CLOSED: [2025-03-18 Tue 12:43]
    Doing `.find('SOMETHING')` on an empty set, returned a set containing a
    literal `0` (`[0]`) instead of the expected empty set `[]`.

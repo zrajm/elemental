@@ -12,6 +12,9 @@ export class Elemental extends Array {
   // Return array of DOM Elements, with some added methods (similar to jQuery).
   constructor(x) {
     super()
+    // Array methods like (.filter(), .map()` etc.) will call our constructor
+    // with the argument '0' because we extend Array. This is for them.
+    if (x === 0 || x === undefined) { return this } // COMPAT for Array methods
     if (typeof x === 'function') { return $(document).on('load', x) }
     Object.assign(
       this, typeof x === 'string'
@@ -27,11 +30,11 @@ export class Elemental extends Array {
   parent() { return this.map(t => t.parentElement) } /* not uniqued! (jQuery does) */
   children() { return this.flatMap(t => [...t.children]) }
   /* query-esque */
-  closest(x) { return this.map(t => t.closest(x)) } /* not uniqued! (jQuery does) */
+  closest(x) { return this.flatMap(t => t.closest(x) ?? []) } /* not uniqued! (jQuery does) */
   filter(x) {
     return super.filter(typeof x === 'string' ? t => t.matches(x) : x)
   }
-  find(x) { return [...this].flatMap(t => [...t.querySelectorAll(x)]) }
+  find(x) { return this.flatMap(t => [...t.querySelectorAll(x)]) }
   is(a) { return this.some(t => t.matches(a)) }
   /* events */
   on(e, ...a) {
