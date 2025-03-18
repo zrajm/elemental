@@ -31,28 +31,25 @@ color of all elements in the DOM to red).
 
 Most methods are directly analogous to the jQuery function with the same name.
 
-
-## Constructor
-
-`$(SELECTOR|ELEMENT|HTML|FUNC)`—Returns an Elemental array (with DOM Elements).
-The Elemental object inherits from Javascript Array, so all array methods are
+The Elemental object inherits from Javascript *Array*, so all array methods are
 supported (`.splice()`, `.concat()`, `.forEach()` etc). Callback functions
 invoked by these are passed methods are passed their arguments in the native
-Javascript order (not the order used by jQuery).
+Javascript order (*not* the order used by jQuery).
 
 
-### Allowed Arguments
+## Constructor & Creation
 
-* `SELECTOR`—Returns the DOM elements matched by the given CSS selector.
-* `ELEMENT`—Returns an Element object
-* `HTML`—Creates and returns the elements described by the HTML string. The
-  string must begin with `<` (or else it will be considered a `SELECTOR`).
-  Elements are not automatically inserted into the DOM, you'll have to do that
-  yourself (using `.append()` or similar). **NOTE: Inline event handlers, and
-  similar Javascript content found in `HTML` will be executed, always escape
-  untrusted code.**
-* `FUNC`—Just like in jQuery `$(FUNC)` is an alias for `$(document).on('load',
-  FUNC)`.
+**NOTE:** Using `HTML` in the constructor `$(…)` will cause inline event
+handlers, and Javascript content to be executed, always escape untrusted code.
+
+* `$(SELECTOR|ELEMENT|HTML|FUNC)`—Returns an Elemental array (of DOM Elements).
+  `SELECTOR` (a CSS selector) returns the matching DOM elements on the current
+  page. `ELEMENT` (a DOM element) returns an Elemental array containing that
+  element. `HTML` (must start with `<`) returns the elements described by HTML
+  (elements are not inserted into the DOM, you'll have to do that yourself,
+  using `.append()` or similar). `FUNC` execute function on page load (alias
+  for `$(document).on('load', FUNC)`).
+* `.clone()`—Return a (deep) clone of the set of elements.
 
 
 ## DOM Traversal
@@ -68,8 +65,7 @@ Javascript order (not the order used by jQuery).
 ## Query-esque
 
 These methods all accept a CSS-style `SELECTOR` as an argument, and traverse
-the DOM to match any matching elements, however, the way they traverse is
-differs.
+the DOM to find matching elements, however, the way they traverse is differs.
 
 * `.closest(SELECTOR)`—Return list of closest element or ancestor element that
   matches the given CSS selector. For each element in the input matching is
@@ -77,9 +73,10 @@ differs.
   grandparent element etc and so on up to the root element. (The returned
   result may contain duplicates and `null` elements).
 * `.find(SELECTOR)`—Return list of all matching child elements.
-* `.filter(SELECTOR|FUNC)`—Return matching subset of elements. Either using a
-  CSS selector, or invoking a function for each element is the set. `FUNC` is
-  invoked as `FUNC(ELEMENT, INDEX, ARRAY)`.
+* `.filter(SELECTOR|FUNC)`—Return matching subset of elements. `SELECTOR` (a
+  CSS selector) returns the matching elements. `FUNC` (like Javascript Array
+  function `.filter()`) returns the elements for which `FUNC` returned truthy.
+  Function is called for each element using `FUNC(ELEMENT, INDEX, ARRAY)`.
 * `.is(SELECTOR)`—Return `true` if any element in the input matches the given
   CSS selector, `false` otherwise.
 
@@ -127,7 +124,8 @@ differs.
 
 # Credits
 
-Written by zrajm. Released under [GNU Public License version 2][GPLv2].
+Copyright 2024–2025 by zrajm. Released under [GNU Public License version
+2][GPLv2].
 
 [GPLv2]: ./LICENSE.txt
 [Javascript ForEach]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach "Javascript .forEach() Documentation"

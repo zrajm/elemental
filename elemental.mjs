@@ -21,6 +21,7 @@ export class Elemental extends Array {
            : document.querySelectorAll(x))                    // CSS selector
         : x.length === undefined ? [x] : x)
   }
+  clone() { return this.map(t => t.cloneNode(1)) }
   /* traversal */
   forEach(x) { super.forEach(x); return this }
   parent() { return this.map(t => t.parentElement) } /* not uniqued! (jQuery does) */
