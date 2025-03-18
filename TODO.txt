@@ -13,10 +13,16 @@
    + Automatically uniquify the result (just like jQuery).
    + Maybe make it possible replace some Elemental methods with builtin `Set`
      methods?
+   + Allows one to test if Elemental returned anything by using `ELEMENT.size`
+     (instead of the wordier `ELEMENT.length`)
 * [0/1] Tests
 ** TODO Add some kind of tests
-* [2/2] FINISHED
-** DONE Allow space-separated class names work is class methods         :BUG:
+* [3/3] FINISHED
+** DONE Fixed `.find()` returning `[0`] on empty set returned           :BUG:
+   CLOSED: [2025-03-18 Tue 12:43]
+   Doing `.find('SOMETHING')` on an empty set, returned a set containing a
+   literal `0` (`[0]`) instead of the expected empty set `[]`.
+** DONE Fixed space-separated class names in class methods              :BUG:
    CLOSED: [2025-03-17 Mon 17:17]
 ** DONE Fixed `.append(HTML)` failure with `<head>` tags                :BUG:
    CLOSED: [2025-03-17 Mon 15:35]

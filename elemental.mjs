@@ -30,7 +30,7 @@ export class Elemental extends Array {
   filter(x) {
     return super.filter(typeof x === 'string' ? t => t.matches(x) : x)
   }
-  find(x) { return this.flatMap(t => [...t.querySelectorAll(x)]) }
+  find(x) { return [...this].flatMap(t => [...t.querySelectorAll(x)]) }
   is(a) { return this.some(t => t.matches(a)) }
   /* events */
   on(e, ...a) {
