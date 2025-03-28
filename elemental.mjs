@@ -4,7 +4,8 @@
 // Elemental. Mini jQuery replacement.
 export const $ = x => new Elemental(x)
 export class Elemental extends Array {
-  #wordsplit(x) { return x.trim().split(/\s+/) }
+  // #wordsplit ('' => [] & array [without `trim`] kept as-is)
+  #wordsplit(x) { return !x ? [] : x.trim?.().split(/\s+/) ?? x }
   #classes(cmd, x) {
     return this.forEach(t => t.classList[cmd](...this.#wordsplit(x)))
   }
