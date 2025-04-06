@@ -1,7 +1,86 @@
 -*- org -*-
 
-* [0/1] Features
-** TODO Pass around `Set` internally? (instead of `NodeList`)
+* [0/7] Features
+** TODO Support different DOM node types
+   The Elemental set can be made to contain entries of various nodeTypes, not
+   just *element nodes*, but also *text nodes*, etc.[1]
+
+   Applying an Elemental method to a set that contains any of these nodes
+   should never fail, but Just Work™. This means safeguarding against invoked
+   DOM methods not existing on an element.
+
+   For example by invoking a method like this (which guarantees an empty result
+   for *text nodes* (and other types of nodes for which there doesn't exist a
+   `.querySelectorAll()` method):
+
+   find(x) { return this.flatMap(t => [...t.querySelectorAll?.(x) ?? []]) }
+
+   Instead of the previous:
+
+   find(x) { return this.flatMap(t => [...t.querySelectorAll(x)]) }
+
+
+
+   [1]: https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+** TODO Add `.contents()` -- return child nodes (not just elements)
+   FIXME: This would be useful in the `md.js` program, for the `tocEntry()`
+   function.
+
+   | Here:                   | $($t[0].childNodes) |
+   | Could be replaced with: | $t.contents()       |
+** TODO Add `.wrap()`
+** TODO Add `.unwrap()`
+   Removes a tag's parent, while keeping the tag[1]. (NB: This doesn't remove the
+   tags in the set, but their parents!) So, in jQuery, to remove all '<a>' but
+   keeping their textual content in place, one would use an extra call to
+   `.contents()` (which can return text nodes, as well as HTML elements), like
+   this: `$('a').contents().unwrap()`
+
+   [1]: https://www.tutorialrepublic.com/faq/how-to-remove-wrapper-element-but-keep-the-text-content-intact-using-jquery.php
+
+   Removing the parent (instead of the element itself), has the advantage that
+   this works (since the `p` elements remain in the DOM).
+
+   const $p = $('p')
+   $p.wrap('<div style="outline: 2px solid red">') // add border element
+   $p.unwrap()                                     // remove it again
+
+   FIXME: This would be useful in the `md.js` program, for the `tocEntry()`
+   function.
+
+   | Here:                   | .forEach(t => { t.replaceWith(...t.childNodes) }) |
+   | Could be replaced with: | .contents().unwrap()                              |
+** TODO Call `.attr()` without args to get object?
+   Would this be generalizable to other methods?
+
+   Maybe calling with no arg should return an object of name/values? E.g.:
+
+   const attr = $('body').attr()
+   const lang = attr.lang
+
+   Ideally I'd like to be able to iterate over the name/values though.
+
+   for (const [name, value] of $body.attr()) {
+     ...
+   }
+   $body.attr().forEach((value, name) => {
+     ...
+   })
+   etc.
+
+   Currently these are supported:
+
+   tag.attr('name')                            // return value
+   tag.attr('name', value)                     // sets value (return tag)
+   tag.attr({ name1: value1, name2: value2 })  // sets many values (return tag)
+
+   What would be an easy way to return all attributes as a string suitable for
+   adding to an HTML tag?
+
+   Object.entries($body.attr()).map(([name, value]) => {
+      return `${name}="${value.replace(/"/g, '&quot;'))}"`
+   }).join(' ')
+** TODO Use a Javascript `Set` internally? (instead of `NodeList`)
    `.querySelectorAll()` returns a `NodeList` object (which is then used
    internally by Elemental), but MDN seem to think that this is not best
    practice for newer code.
@@ -15,6 +94,22 @@
      methods?
    + Allows one to test if Elemental returned anything by using `ELEMENT.size`
      (instead of the wordier `ELEMENT.length`)
+** TODO Constructor compatible with `new Array()` args?           :BUG_MAYBE:
+   Got into a weird situation where methods, not explicitly implemented by
+   Elemental, but instead relying on the behavior of the inherited native
+   Javascript Array methods (e.g. `.filter()`, `.map()` etc., though not
+   `.reduce()`) returned a single element array with the number zero in it
+   (`[0]`).
+
+   This turned out to be result of `new Elemental(0)` (which was implicitly
+   called by the various Array methods) returning `[0]`. Apparently, by
+   extending `Array`, the `Array` methods that themselves use invoke an `Array`
+   constructor, instead will now invoke the `Elemental` constructor, meaning
+   that the our constructor need to be call compatible with `Array's`
+   constructor!
+
+   Are we required to be compatible with other constructor calls? (e.g. `new
+   Array(45)`, or `new Array(1, 2, 4)` etc.)
 * [0/2] Tests
 ** TODO Test that empty Elemental set works with `.flatmap()` etc.
    Behavior I saw was:
