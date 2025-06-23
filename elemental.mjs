@@ -71,10 +71,7 @@ export class Elemental extends Array {
   removeClass(x) { return this.#classes('remove', x) }
   toggleClass(x) { return this.#classes('toggle', x) }
   css(css = {}) {
-    css = Object.entries(css)
-    return this.forEach(t => css.forEach(([k, v]) =>
-      t.style[k] = `${v}${typeof v === 'number' ? 'px' : ''}`
-    ))
+    return this.forEach(t => Object.assign(t.style, css))
   }
   attr(a) {
     if (Array.isArray(a)) { throw TypeError('.attr() arg cannot be array') }

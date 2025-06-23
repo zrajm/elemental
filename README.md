@@ -115,8 +115,7 @@ the DOM to find matching elements, however, the way they traverse is differs.
 * `.toggleClass(CLASSES)`—Toggle the given (space-separated) class names in the
   input elements.
 * `.css({ KEY: VALUE, …})`—Replace the CSS properties for the input elements
-  with those specified in a plain object. If a `VALUE` is a number, `px` will
-  be appended to it.
+  with those specified in a plain object.
 * `.attr({ KEY: VALUE, …})`—Set or remove attributes. If a `VALUE` is nullish
   (`null` or `undefined`) then the corresponding attribute is removed,
   otherwise it is set to `VALUE`.

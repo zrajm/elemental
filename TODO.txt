@@ -1,29 +1,13 @@
 -*- org -*-
 
 * [0/9] Features
-** TODO `.css()` remove number = px shortcut(?)
-   This possibly messes with properties that are unitless? (Like `line-height`,
-   and `opacity`). We could either do something ridiculous, like upgrade
-   numbers to `px` only for those properties where it makes sense (which would
-   be very lengthy code) or just drop this feature.
+** TODO Replace `DOMparser()` with `document.createElement()`?
+   Is the `document.createElement()` better here than `new DOMparser()`?
 
-   The Jquery behaviour is described as (https://api.jquery.com/css/):
-
-   In jQuery 4.0 or newer, when a number is passed as the value, jQuery will
-   only convert it to a string and add `px` to the end of that string for a
-   limited set of properties - mostly related to width, height, border, margin
-   & padding; the full list:
-
-   + setting the element position: `top`, `right`, `bottom`, `left`
-   + setting the element dimensions: `width`, `height`, `min-width`,
-     `min-height`, `max-width`, `max-height`
-   + padding-related: `padding`, `padding-top`, `padding-right`,
-     `padding-bottom`, `padding-left`
-   + margin-related: `margin`, `margin-top`, `margin-right`, `margin-bottom`,
-     `margin-left`
-   + border-related: `border`, `border-width`, `border-top`,
-     `border-top-width`, `border-right`, `border-right-width`, `border-bottom`,
-     `border-bottom-width`, `border-left`, `border-left-width`
+   const $ = (
+     x => x[0] === '<'
+       ? ((x, t = document.createElement('div')) => (t.innerHTML = x, t.childNodes))(x)[0]
+       : document.querySelector(x))
 ** TODO Support different DOM node types
    The Elemental set can be made to contain entries of various nodeTypes, not
    just *element nodes*, but also *text nodes*, etc.[1]
@@ -158,6 +142,30 @@
    $('selector-that-doesnt-match-anything').length => 0
 ** TODO Add some kind of tests
 * [4/4] FINISHED
+** DONE `.css()` remove number = px shortcut(?)
+   CLOSED: [2025-06-23 Mon 13:13]
+   This possibly messes with properties that are unitless? (Like `line-height`,
+   and `opacity`). We could either do something ridiculous, like upgrade
+   numbers to `px` only for those properties where it makes sense (which would
+   be very lengthy code) or just drop this feature.
+
+   The Jquery behaviour is described as (https://api.jquery.com/css/):
+
+   In jQuery 4.0 or newer, when a number is passed as the value, jQuery will
+   only convert it to a string and add `px` to the end of that string for a
+   limited set of properties - mostly related to width, height, border, margin
+   & padding; the full list:
+
+   + setting the element position: `top`, `right`, `bottom`, `left`
+   + setting the element dimensions: `width`, `height`, `min-width`,
+     `min-height`, `max-width`, `max-height`
+   + padding-related: `padding`, `padding-top`, `padding-right`,
+     `padding-bottom`, `padding-left`
+   + margin-related: `margin`, `margin-top`, `margin-right`, `margin-bottom`,
+     `margin-left`
+   + border-related: `border`, `border-width`, `border-top`,
+     `border-top-width`, `border-right`, `border-right-width`, `border-bottom`,
+     `border-bottom-width`, `border-left`, `border-left-width`
 ** DONE Fixed array returning `[0]` on empty set                        :BUG:
    CLOSED: [2025-03-18 Tue 14:53]
    This happened because the Array methods would invoke OUR constructor
