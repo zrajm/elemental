@@ -49,17 +49,17 @@ export class Elemental extends Array {
     } else if (typeof x !== 'function') {
       throw TypeError('.on() 2nd arg must be handler or selector')
     }
-    return this.forEach($e => e.forEach(e => {
+    return this.forEach(t => e.forEach(e => {
       if (typeof browser !== 'undefined' &&  // for Firefox plugins
-          ($e === browser.tabs || $e === browser.storage)) {
-        return $e[`on${e[0].toUpperCase()}${e.slice(1)}`].addListener(...a)
+          (t === browser.tabs || t === browser.storage)) {
+        return t[`on${e[0].toUpperCase()}${e.slice(1)}`].addListener(...a)
       }
-      return $e.addEventListener(e, ...a)
+      return t.addEventListener(e, ...a)
     }))
   }
   off(e, ...a) {
     e = this.#wordsplit(e)
-    return this.forEach($e => e.forEach(e => $e.removeEventListener(e, ...a)))
+    return this.forEach(t => e.forEach(e => t.removeEventListener(e, ...a)))
   }
   /* modification of DOM */
   html(a) { return a ? this.forEach(t => t.innerHTML = a) : this[0].innerHTML }
