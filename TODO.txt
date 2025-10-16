@@ -141,7 +141,9 @@
    [...$('selector-that-doesnt-match-anything')] => []
    $('selector-that-doesnt-match-anything').length => 0
 ** TODO Add some kind of tests
-* [4/4] FINISHED
+* [6/6] FINISHED
+** DONE `.on()` support for delegated events (using `SELECTOR`)
+   CLOSED: [2025-10-16 Thu 04:17]
 ** DONE `.css()` remove number = px shortcut(?)
    CLOSED: [2025-06-23 Mon 13:13]
    This possibly messes with properties that are unitless? (Like `line-height`,

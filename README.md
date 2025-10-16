@@ -83,18 +83,16 @@ the DOM to find matching elements, however, the way they traverse is differs.
 
 ## Events
 
-* `.on(EVENTS, FUNC)`—Attach given event handler to each input elements.
-  `EVENTS` may contain multiple (space separated) event names. Has some special
-  logic to for `browser.tabs` and `browser.storage` events (useful in Firefox
-  addons). Elemental does not support the delegated events of jQuery (with the
-  added `SELECTOR` argument (as in `.on(EVENTS, SELECTOR, FUNC)` arguments)
-  syntax, the easiest way to emulate the same result is to add the following to
-  the beginning of your callback `FUNC`
-```
-  if (!$(evt.target).is(SELECTOR)) { return }
-```
+* `.on(EVENTS, [SELECTOR,] FUNC)`—Attach given event handler to each input
+  element. `EVENTS` may contain multiple (space separated) event names. There
+  is special logic to for `browser.tabs` and `browser.storage` events (useful
+  when writing Firefox addons). Elemental also supports delegated events (à la
+  jQuery) by adding the `SELECTOR` argument. Returns the input elements.
 * `.off(EVENTS, FUNC)`—Remove given handler to from input elements. `EVENTS`
-  may contain multiple (space separated) event names.
+  may contain multiple (space separated) event names. Currently, providing
+  `FUNC` for a delegated events is not useful (as the delegation is handled by
+  a wrapper function, not the function you provided when invoking `.on()`).
+  Returns the input elements.
 
 
 ## DOM Modification

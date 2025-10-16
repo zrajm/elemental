@@ -40,6 +40,15 @@ export class Elemental extends Array {
   /* events */
   on(e, ...a) {
     e = this.#wordsplit(e)
+    const [x, f] = a
+    if (typeof x === 'string') {  // 2nd arg is selector
+      if (typeof f !== 'function') {
+        throw TypeError('.on() 2nd arg is selector, 3rd must be handler')
+      }
+      a.splice(0, 2, e => e.target.matches(x) && f(e))
+    } else if (typeof x !== 'function') {
+      throw TypeError('.on() 2nd arg must be handler or selector')
+    }
     return this.forEach($e => e.forEach(e => {
       if (typeof browser !== 'undefined' &&  // for Firefox plugins
           ($e === browser.tabs || $e === browser.storage)) {
